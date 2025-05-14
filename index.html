@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>타이포그래피 패턴 생성기</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Courier+New&family=Georgia&display=swap" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-wrapper"> <header class="page-header">
+    <div class="page-wrapper">
+        <header class="page-header">
             <h1>타이포그래피 패턴 생성기</h1>
             <p class="subtitle">타이포그래피 '요소'를 통해 패턴을 만드는 인터랙티브 웹 쇼케이스</p>
         </header>
@@ -30,16 +36,16 @@
             <div id="tab3" class="tab-content">
                 <p>타이포그래피의 주요 요소들에 대한 설명이 여기에 들어갑니다.</p>
             </div>
-            <div id="tab4" class="tab-content"> <div class="controls-panel">
+            <div id="tab4" class="tab-content">
+                <div class="controls-panel">
                     <div class="control-group">
                         <label for="text-input">텍스트 입력:</label>
                         <textarea id="text-input" placeholder="여기에 여러 줄을 입력하고&#10;엔터로 줄바꿈 할 수 있습니다."></textarea>
-                        </div>
                     </div>
                     <div class="control-group">
                         <label for="letter-spacing">자간:</label>
                         <input type="range" id="letter-spacing" name="letter-spacing" min="-0.1" max="1" step="0.01" value="0">
-                        <span id="letter-spacing-value">0</span>
+                        <span id="letter-spacing-value">0</span>em
                     </div>
                     <div class="control-group">
                         <label for="line-height">행간:</label>
@@ -49,11 +55,12 @@
                     <div class="control-group">
                         <label for="font-size">크기:</label>
                         <input type="range" id="font-size" name="font-size" min="10" max="100" step="1" value="32">
-                        <span id="font-size-value">32</span>
+                        <span id="font-size-value">32</span>px
                     </div>
                     <div class="control-group">
                         <label for="font-family">서체:</label>
                         <select id="font-family" name="font-family">
+                            <option value="'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif">Pretendard</option>
                             <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
                             <option value="'Montserrat', sans-serif">Montserrat</option>
                             <option value="'Courier New', monospace">Courier New</option>
@@ -73,7 +80,7 @@
                     </div>
                 </div>
                 <div id="pattern-display">
-                    <span id="text-content-wrapper"></span> </div>
+                    <span id="text-content-wrapper"></span>
                 </div>
             </div>
         </main>
