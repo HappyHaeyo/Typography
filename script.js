@@ -30,10 +30,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 초기 상태: 첫 번째 탭이 기본적으로 활성화되도록 설정 (HTML에서 이미 .active 클래스가 첫번째 버튼과 컨텐츠에 있다면 생략 가능)
-    // 만약 HTML에 기본 active 클래스가 없다면 아래 코드로 첫번째 탭을 활성화 할 수 있습니다.
-    // if (tabButtons.length > 0) {
-    //     tabButtons[0].click(); // 첫 번째 탭 버튼을 프로그래매틱하게 클릭
-    // }
+    // =================================
+    // 2. 텍스트 입력 기능 구현
+    // =================================
+    const textInput = document.getElementById('text-input'); // "텍스트 입력" 필드
+    const patternDisplay = document.getElementById('pattern-display'); // 패턴이 표시될 영역
 
-}); // DOMContentLoaded 이벤트 리스너의 끝
+    // patternDisplay의 초기 텍스트를 설정합니다.
+    if (textInput.value === '') {
+        patternDisplay.textContent = '텍스트를 입력하세요'; // 또는 원하는 초기 안내 문구
+    } else {
+        patternDisplay.textContent = textInput.value;
+    }
+
+    // "텍스트 입력" 필드에 사용자가 입력할 때마다 이벤트가 발생합니다.
+    textInput.addEventListener('input', () => {
+        // 입력된 텍스트가 없으면 안내 문구를, 있으면 입력된 텍스트를 표시합니다.
+        if (textInput.value === '') {
+            patternDisplay.textContent = '텍스트를 입력하세요'; // 입력값이 없을 때 안내문구
+        } else {
+            patternDisplay.textContent = textInput.value; // 입력 필드의 현재 값을 patternDisplay에 텍스트로 설정
+        }
+    });
+
+}); // DOMContentLoaded 이벤트 리스너의 끝 (이것이 파일의 유일한 닫는 괄호여야 합니다)
