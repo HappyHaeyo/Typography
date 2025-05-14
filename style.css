@@ -1,0 +1,152 @@
+/* CSS 변수 (색상 및 공통 값) */
+:root {
+    --font-primary: 'Noto Sans KR', sans-serif; /* 기본 폰트 */
+    --color-background: #f8f9fa; /* 페이지 배경색 */
+    --color-surface: #ffffff;    /* 카드(컨텐츠 영역) 배경색 */
+    --color-text-primary: #212529; /* 기본 텍스트 색상 */
+    --color-text-secondary: #495057; /* 보조 텍스트 색상 */
+    --color-accent: #2c3e50; /* 네이비 블루 계열 (활성 탭 배경) */
+    --color-accent-hover: #34495e; /* 네이비 블루 호버 */
+    --color-accent-text: #ffffff; /* 활성 탭 텍스트 */
+    --shadow-main: 0px 5px 10px 2px rgba(0, 0, 0, 0.15); /* 그림자 (요청하신 값보다 약간 부드럽게 조정) */
+    /* 요청하신 그림자: 0px 5px 10px 2px rgba(0, 0, 0, 0.25); */
+    --border-radius-main: 8px; /* 테두리 둥글기 */
+}
+
+/* 기본 스타일 초기화 및 설정 */
+body {
+    margin: 0;
+    font-family: var(--font-primary);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    line-height: 1.6;
+    padding: 20px; /* 페이지 전체에 약간의 여백 */
+}
+
+.page-wrapper {
+    max-width: 1200px; /* 최대 너비 설정 */
+    margin: 40px auto; /* 상하 여백 및 중앙 정렬 */
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-main);
+    box-shadow: var(--shadow-main); /* 요청하신 그림자 적용 */
+    padding: 30px 40px; /* 내부 여백 */
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: var(--color-text-primary);
+}
+
+.page-header .subtitle {
+    font-size: 1.1em;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+}
+
+/* 탭 네비게이션 스타일 */
+.tab-navigation {
+    display: flex;
+    gap: 10px; /* 탭 사이 간격 */
+    margin-bottom: 30px;
+    border-bottom: 1px solid #dee2e6; /* 탭 하단 구분선 */
+    padding-bottom: 15px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    border: 1px solid transparent; /* 기본 테두리 없음 */
+    border-radius: var(--border-radius-main);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; /* 부드러운 전환 효과 */
+}
+
+.tab-button:hover {
+    background-color: var(--color-accent-hover);
+    color: var(--color-accent-text);
+    transform: translateY(-2px); /* 살짝 위로 뜨는 효과 */
+}
+
+.tab-button.active {
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
+    font-weight: 700;
+}
+
+/* 탭 콘텐츠 기본 숨김 */
+.tab-content {
+    display: none;
+}
+
+/* 활성 탭 콘텐츠만 보임 */
+.tab-content.active {
+    display: block;
+}
+
+/* 컨트롤 패널 및 패턴 디스플레이 영역 (다음 단계에서 더 구체화) */
+#tab4.tab-content.active { /* 패턴 쇼케이스 탭이 활성화될 때 */
+    display: flex; /* 컨트롤과 디스플레이를 가로로 배치 */
+    gap: 30px;
+}
+
+.controls-panel {
+    flex: 1; /* 남은 공간을 차지하도록 (조절 가능) */
+    /* 임시 스타일 */
+    padding: 20px;
+    background-color: #f8f9fa; /* 약간 다른 배경색으로 구분 */
+    border-radius: var(--border-radius-main);
+}
+
+#pattern-display {
+    flex: 2; /* 컨트롤 패널보다 넓게 (조절 가능) */
+    border: 1px solid #dee2e6;
+    min-height: 300px; /* 최소 높이 */
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5rem; /* 기본 글자 크기 (JS로 변경될 예정) */
+    font-weight: bold;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-main);
+    /* CSS 변수로 초기 스타일 설정 (JS가 제어하도록 변경 예정) */
+    letter-spacing: var(--default-letter-spacing, 0);
+    line-height: var(--default-line-height, 1.5);
+    /* font-family는 JS에서 body나 이 요소에 직접 적용 */
+}
+
+/* 컨트롤 그룹 스타일 (다음 단계에서 구체화) */
+.control-group {
+    margin-bottom: 15px;
+}
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.control-group input[type="text"],
+.control-group input[type="range"],
+.control-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box; /* padding, border가 width에 포함되도록 */
+}
+.control-group input[type="range"] {
+    padding: 0; /* range는 padding 기본값이 다를 수 있음 */
+}
+.control-group span { /* 슬라이더 값 표시 */
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+}
