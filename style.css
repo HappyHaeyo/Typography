@@ -28,7 +28,7 @@ body {
     margin: 40px auto; /* 상하 여백 및 중앙 정렬 */
     background-color: var(--color-surface);
     border-radius: var(--border-radius-main);
-    box-shadow: var(--shadow-main); /* 요청하신 그림자 적용 */
+    box-shadow: var(--shadow-main);
     padding: 30px 40px; /* 내부 여백 */
 }
 
@@ -99,43 +99,33 @@ body {
 }
 
 .controls-panel {
-    flex: 1; /* 남은 공간을 차지하도록 (조절 가능) */
+    flex: 1;
     padding: 20px;
-    background-color: #f8f9fa; /* 약간 다른 배경색으로 구분 */
+    background-color: #f8f9fa;
     border-radius: var(--border-radius-main);
 }
 
-/* ▼▼▼ #pattern-display 스타일 수정 ▼▼▼ */
+/* #pattern-display 스타일 (내부 wrapper를 중앙 정렬하는 역할) */
 #pattern-display {
-    flex: 2; /* 컨트롤 패널보다 넓게 (조절 가능) */
+    flex: 2;
     border: 1px solid #dee2e6;
-    min-height: 300px; /* 최소 높이 */
-    padding: 20px; /* 내부 여백은 wrapper와 간격을 위해 유지 */
-    display: flex; /* 내부의 #text-content-wrapper를 중앙 정렬하기 위함 */
-    justify-content: center; /* 수평 중앙 */
-    align-items: center;    /* 수직 중앙 */
+    min-height: 300px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: var(--color-surface);
     border-radius: var(--border-radius-main);
-    overflow: auto; /* 내용이 너무 커지면 스크롤바 생성 (추가) */
-    /* 아래 스타일들은 #text-content-wrapper로 이동하거나 JS가 직접 제어합니다. */
-    /* font-size: 5rem; */ /* 주석 처리 또는 삭제 */
-    /* font-weight: bold; */ /* 주석 처리 또는 삭제 */
-    /* letter-spacing: var(--default-letter-spacing, 0); */ /* 주석 처리 또는 삭제 */
-    /* line-height: var(--default-line-height, 1.5); */ /* 주석 처리 또는 삭제 */
+    overflow: auto;
 }
-/* ▲▲▲ #pattern-display 스타일 수정 ▲▲▲ */
 
-/* ▼▼▼ #text-content-wrapper 스타일 추가 ▼▼▼ */
+/* #text-content-wrapper 스타일 (실제 텍스트가 표시되고 스타일이 적용되는 곳) */
 #text-content-wrapper {
     display: inline-block; /* 내용에 맞게 크기 조절 */
-    text-align: left;      /* wrapper 내부 텍스트는 기본 왼쪽 정렬 (JS로 변경될 스타일들이 여기에 적용됨) */
-    /* 사용자가 입력한 공백과 줄바꿈을 유지하고 싶다면 아래 주석 해제 */
-    /* white-space: pre-wrap; */
-    /* 기타 필요한 기본 스타일이 있다면 여기에 추가할 수 있지만,
-       대부분의 타이포그래피 스타일은 JavaScript로 직접 적용됩니다. */
+    text-align: left;      /* wrapper 내부 텍스트는 기본 왼쪽 정렬 */
+    white-space: pre-wrap; /* 사용자가 입력한 공백과 줄바꿈 유지 */
+    /* JavaScript로 타이포그래피 스타일이 여기에 직접 적용됩니다. */
 }
-/* ▲▲▲ #text-content-wrapper 스타일 추가 ▲▲▲ */
-
 
 /* 컨트롤 그룹 스타일 */
 .control-group {
@@ -146,15 +136,27 @@ body {
     margin-bottom: 5px;
     font-weight: 500;
 }
-.control-group input[type="text"],
+
+/* input[type="text"] 대신 textarea에 대한 스타일을 명시적으로 추가하거나,
+   기존 input, select와 함께 그룹화합니다. */
 .control-group input[type="range"],
-.control-group select {
+.control-group select,
+.control-group textarea { /* textarea 추가 */
     width: 100%;
     padding: 8px;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    box-sizing: border-box; /* padding, border가 width에 포함되도록 */
+    box-sizing: border-box;
+    font-family: var(--font-primary); /* 일관된 폰트 적용 */
 }
+
+/* textarea의 경우 높이와 resize 옵션 추가 */
+.control-group textarea {
+    min-height: 80px; /* 최소 높이 (필요에 따라 조절) */
+    resize: vertical; /* 수직으로만 크기 조절 가능 */
+}
+
+
 .control-group input[type="range"] {
     padding: 0; /* range는 padding 기본값이 다를 수 있음 */
 }
