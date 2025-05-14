@@ -5,49 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>타이포그래피 패턴 생성기</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1>타이포그래피 패턴 생성기</h1>
+    <div class="page-wrapper"> <header class="page-header">
+            <h1>타이포그래피 패턴 생성기</h1>
+            <p class="subtitle">타이포그래피 '요소'를 통해 패턴을 만드는 인터랙티브 웹 쇼케이스</p>
+        </header>
 
-    <div class="controls">
-        <label for="letter-spacing">자간:</label>
-        <input type="range" id="letter-spacing" name="letter-spacing" min="-0.1" max="1" step="0.01" value="0">
-        <span id="letter-spacing-value">0</span>em
+        <nav class="tab-navigation">
+            <button class="tab-button active" data-tab="tab1">타이포그래피란?</button>
+            <button class="tab-button" data-tab="tab2">패턴이란?</button>
+            <button class="tab-button" data-tab="tab3">타이포그래피 요소</button>
+            <button class="tab-button" data-tab="tab4">패턴 쇼케이스</button>
+        </nav>
 
-        <label for="line-height">행간:</label>
-        <input type="range" id="line-height" name="line-height" min="0.8" max="3" step="0.1" value="1.5">
-        <span id="line-height-value">1.5</span>
-
-        <label for="font-size">크기:</label>
-        <input type="range" id="font-size" name="font-size" min="10" max="100" step="1" value="32">
-        <span id="font-size-value">32</span>px
-
-        <label for="font-family">서체:</label>
-         <select id="font-family" name="font-family">
-            <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
-            <option value="'Nanum Gothic', sans-serif">Nanum Gothic</option>
-            <option value="'Nanum Myeongjo', serif">Nanum Myeongjo</option>
-            <option value="'Courier New', monospace">Courier New</option>
-         </select>
-
-        <label for="font-weight">굵기:</label>
-        <select id="font-weight" name="font-weight">
-            <option value="100">100 (Thin)</option>
-            <option value="200">200 (Extra Light)</option>
-            <option value="300">300 (Light)</option>
-            <option value="400">400 (Normal)</option>
-            <option value="500">500 (Medium)</option>
-            <option value="600">600 (Semi Bold)</option>
-            <option value="700">700 (Bold)</option>
-            <option value="800">800 (Extra Bold)</option>
-            <option value="900">900 (Black)</option>
-        </select>
-        </div>
-
-    <div id="pattern-display">
-        여기에 텍스트를 입력하거나<br>
-        패턴을 만들어 보세요.<br>
-        Adjust the controls above.
+        <main class="content-area">
+            <div id="tab1" class="tab-content active">
+                <p>타이포그래피란 무엇인지에 대한 설명이 여기에 들어갑니다.</p>
+            </div>
+            <div id="tab2" class="tab-content">
+                <p>패턴이란 무엇인지에 대한 설명이 여기에 들어갑니다.</p>
+            </div>
+            <div id="tab3" class="tab-content">
+                <p>타이포그래피의 주요 요소들에 대한 설명이 여기에 들어갑니다.</p>
+            </div>
+            <div id="tab4" class="tab-content"> <div class="controls-panel">
+                    <div class="control-group">
+                        <label for="text-input">텍스트 입력:</label>
+                        <input type="text" id="text-input" placeholder="여기에 입력">
+                    </div>
+                    <div class="control-group">
+                        <label for="letter-spacing">자간:</label>
+                        <input type="range" id="letter-spacing" name="letter-spacing" min="-0.1" max="1" step="0.01" value="0">
+                        <span id="letter-spacing-value">0</span>em
+                    </div>
+                    <div class="control-group">
+                        <label for="line-height">행간:</label>
+                        <input type="range" id="line-height" name="line-height" min="0.8" max="3" step="0.1" value="1.5">
+                        <span id="line-height-value">1.5</span>
+                    </div>
+                    <div class="control-group">
+                        <label for="font-size">크기:</label>
+                        <input type="range" id="font-size" name="font-size" min="10" max="100" step="1" value="32">
+                        <span id="font-size-value">32</span>px
+                    </div>
+                    <div class="control-group">
+                        <label for="font-family">서체:</label>
+                        <select id="font-family" name="font-family">
+                            <option value="'Noto Sans KR', sans-serif">Noto Sans KR</option>
+                            <option value="'Montserrat', sans-serif">Montserrat</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label for="font-weight">굵기:</label>
+                        <select id="font-weight" name="font-weight">
+                            <option value="100">100 (Thin)</option>
+                            <option value="300">300 (Light)</option>
+                            <option value="400">400 (Normal)</option>
+                            <option value="500">500 (Medium)</option>
+                            <option value="700">700 (Bold)</option>
+                            <option value="900">900 (Black)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="pattern-display">
+                    TYPOGRAPHY
+                </div>
+            </div>
+        </main>
     </div>
 
     <script src="script.js"></script>
