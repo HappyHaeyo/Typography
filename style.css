@@ -174,3 +174,15 @@ body {
     font-size: 0.9em;
     color: var(--color-text-secondary);
 }
+/* 개별 조정이 가능한 단어(span)에 대한 기본 스타일 */
+.editable-unit {
+    display: inline-block; /* 개별 요소로 인식되도록 */
+    cursor: pointer; /* 마우스를 올리면 클릭 가능함을 표시 */
+    transition: background-color 0.2s ease; /* 부드러운 효과 */
+    border-radius: 3px; /* 약간 둥글게 (선택 사항) */
+}
+
+/* 나중에 클릭으로 선택될 단어에 적용될 스타일 */
+.editable-unit.selected {
+    background-color: #d0eaff; /* 선택되었을 때의 배경색 (예시) */
+}
