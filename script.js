@@ -17,27 +17,46 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. 텍스트 입력 기능 구현
+  // 2. 텍스트를 단어 단위로 분리하여 렌더링하는 기능
     const textInput = document.getElementById('text-input');
     const textContentWrapper = document.getElementById('text-content-wrapper');
 
-    if (textContentWrapper) {
-        if (textInput.value === '') {
+    function renderTextUnits() {
+        if (!textContentWrapper) return;
+
+        // 기존 내용을 모두 지웁니다.
+        textContentWrapper.innerHTML = '';
+
+        const text = textInput.value;
+
+        if (text === '') {
             textContentWrapper.textContent = '텍스트를 입력하세요';
-        } else {
-            textContentWrapper.textContent = textInput.value;
+            return;
         }
+
+        // 공백과 줄바꿈을 포함하여 텍스트를 단어 단위로 분리합니다.
+        const units = text.split(/(\s+)/);
+
+        units.forEach(unit => {
+            if (unit.trim().length > 0) { // unit이 단어일 경우
+                const wordSpan = document.createElement('span');
+                wordSpan.className = 'editable-unit'; // 나중에 선택과 스타일링을 위한 클래스
+                wordSpan.textContent = unit;
+                textContentWrapper.appendChild(wordSpan);
+            } else { // unit이 공백이나 줄바꿈일 경우
+                // 공백과 줄바꿈은 텍스트 노드로 그대로 추가합니다.
+                textContentWrapper.appendChild(document.createTextNode(unit));
+            }
+        });
     }
 
-    textInput.addEventListener('input', () => {
-        if (textContentWrapper) {
-            if (textInput.value === '') {
-                textContentWrapper.textContent = '텍스트를 입력하세요';
-            } else {
-                textContentWrapper.textContent = textInput.value;
-            }
-        }
-    });
+    // `textarea`에 입력이 있을 때마다 renderTextUnits 함수를 호출합니다.
+    textInput.addEventListener('input', renderTextUnits);
+
+    // 페이지 로드 시 초기 텍스트 렌더링
+    if (textContentWrapper) {
+        renderTextUnits();
+    }
 
     // 3. 타이포그래피 컨트롤 기능 구현
     const letterSpacingSlider = document.getElementById('letter-spacing');
