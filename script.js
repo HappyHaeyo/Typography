@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. 텍스트를 단어 단위로 분리하고, 클릭 이벤트를 추가하는 기능 (▼▼▼ 이 부분이 수정됨 ▼▼▼)
+    // 2. 텍스트를 "글자" 단위로 분리하고, 클릭 이벤트를 추가하는 기능 (▼▼▼ 이 부분이 수정됨 ▼▼▼)
     const textInput = document.getElementById('text-input');
     const textContentWrapper = document.getElementById('text-content-wrapper');
 
@@ -32,26 +32,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const units = text.split(/(\s+)/);
+        // ▼▼▼ [핵심 변경점!] 텍스트를 글자 단위 배열로 분리합니다. ▼▼▼
+        const characters = text.split('');
 
-        units.forEach(unit => {
-            if (unit.trim().length > 0) {
-                const wordSpan = document.createElement('span');
-                wordSpan.className = 'editable-unit';
-                wordSpan.textContent = unit;
+        // 각 글자를 순회하며 span으로 만듭니다.
+        characters.forEach(char => {
+            const charSpan = document.createElement('span');
+            charSpan.className = 'editable-unit';
+            charSpan.textContent = char;
 
-                // ▼▼▼ [새로 추가된 핵심 로직!] 클릭 이벤트 리스너 추가 ▼▼▼
-                wordSpan.addEventListener('click', (event) => {
-                    // 클릭된 요소의 'selected' 클래스를 토글(toggle)합니다.
-                    // 클래스가 없으면 추가하고, 있으면 제거합니다.
-                    event.target.classList.toggle('selected');
-                });
-                // ▲▲▲ [새로 추가된 핵심 로직!] ▲▲▲
+            // 각 글자(span)에 클릭 이벤트를 추가합니다.
+            charSpan.addEventListener('click', (event) => {
+                event.target.classList.toggle('selected');
+            });
 
-                textContentWrapper.appendChild(wordSpan);
-            } else {
-                textContentWrapper.appendChild(document.createTextNode(unit));
-            }
+            textContentWrapper.appendChild(charSpan);
         });
     }
 
@@ -75,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyStyles() {
         if (!textContentWrapper) return;
         
-        // (이 함수는 다음 2-3단계에서 수정될 예정입니다. 지금은 그대로 둡니다.)
+        // (이 함수는 다음 단계에서 수정될 예정입니다. 지금은 그대로 둡니다.)
         const letterSpacing = letterSpacingSlider.value + 'em';
         const lineHeight = lineHeightSlider.value;
         const fontSize = fontSizeSlider.value + 'px';
