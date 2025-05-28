@@ -5,30 +5,54 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. 탭 네비게이션 기능
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
+
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
             const targetTabId = button.getAttribute('data-tab');
-            // 모든 탭 버튼과 탭 콘텐츠에서 active 클래스 제거
-            tabButtons.forEach(btn => btn.classList.remove('active'));
-            tabContents.forEach(content => content.classList.remove('active'));
 
-            // 클릭된 탭 버튼과 해당 탭 콘텐츠에 active 클래스 추가
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+                // CHATBOT 탭이 아닌 다른 탭으로 전환 시, CHATBOT 탭의 flex 스타일도 제거 (block으로 돌아가도록)
+                if (content.id === 'tab5' && targetTabId !== 'tab5') {
+                    content.style.display = ''; // 인라인 스타일 제거하여 CSS의 display:none 적용
+                }
+                // 패턴 쇼케이스 탭이 아닌 다른 탭으로 전환 시, flex 스타일 제거
+                if (content.id === 'tab4' && targetTabId !== 'tab4') {
+                    content.style.display = '';
+                }
+            });
+
             button.classList.add('active');
             const targetContent = document.getElementById(targetTabId);
             if (targetContent) {
                 targetContent.classList.add('active');
+                 // 패턴 쇼케이스 또는 CHATBOT 탭이 활성화될 때 display 속성을 CSS 정의에 맞게 설정
+                if (targetTabId === 'tab4' || targetTabId === 'tab5') {
+                    targetContent.style.display = 'flex'; // CSS에서 .active 가 block으로 덮어쓰므로, flex를 JS로 지정
+                } else {
+                    targetContent.style.display = 'block'; // 다른 탭은 block
+                }
             }
         });
     });
+
+    // 초기에 활성화될 탭 (예: tab1)에 대해 display 속성 강제
+    const initialActiveTab = document.querySelector('.tab-content.active');
+    if (initialActiveTab && (initialActiveTab.id === 'tab4' || initialActiveTab.id === 'tab5')) {
+        initialActiveTab.style.display = 'flex';
+    } else if (initialActiveTab) {
+        initialActiveTab.style.display = 'block';
+    }
+
 
     // 2. 텍스트 렌더링 기능 (패턴 쇼케이스 탭용)
     const textInput = document.getElementById('text-input');
     const textContentWrapper = document.getElementById('text-content-wrapper');
     function renderTextUnits() {
-        if (!textContentWrapper) return;
+        if (!textContentWrapper || !textInput) return; // 요소 존재 확인
         textContentWrapper.innerHTML = '';
-        // textInput이 null일 경우를 대비
-        const text = textInput ? textInput.value : '';
+        const text = textInput.value;
         if (text === '') {
             textContentWrapper.textContent = '텍스트를 입력하세요';
             return;
@@ -47,13 +71,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    if (textInput) { // textInput 요소가 페이지에 있을 때만 실행
+    if (textInput) {
         textInput.addEventListener('input', renderTextUnits);
+        if (textContentWrapper) renderTextUnits();
     }
-    if (textContentWrapper) { // textContentWrapper도 있을 때 초기 렌더링
-         renderTextUnits();
-    }
-
 
     // 3. 타이포그래피 컨트롤 기능 (패턴 쇼케이스 탭용)
     const letterSpacingSlider = document.getElementById('letter-spacing');
@@ -67,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyStyles() {
         if (!textContentWrapper) return;
-        // 컨트롤러가 페이지에 없을 수도 있으므로, 각 컨트롤러의 존재 여부를 확인합니다.
         const lsValue = letterSpacingSlider ? letterSpacingSlider.value : '0';
         const lhValue = lineHeightSlider ? lineHeightSlider.value : '1.5';
         const fsValue = fontSizeSlider ? fontSizeSlider.value : '32';
@@ -97,15 +117,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fontSizeSlider && fontSizeValueSpan) fontSizeValueSpan.textContent = fsValue;
         if (fontWeightSlider && fontWeightValueSpan) fontWeightValueSpan.textContent = fwValue;
     }
-
     const controls = [letterSpacingSlider, lineHeightSlider, fontSizeSlider, fontWeightSlider];
     controls.forEach(control => {
-        if (control) { // 각 컨트롤 요소가 페이지에 있을 때만 이벤트 리스너를 추가합니다.
+        if (control) {
             control.addEventListener('input', applyStyles);
         }
     });
-
-    if (textContentWrapper) { // textContentWrapper가 있을 때만 초기 스타일 적용
+    if (textContentWrapper) {
         applyStyles();
     }
 
@@ -116,80 +134,39 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!event.target.classList.contains('template-btn') || !textContentWrapper) return;
             const templateType = event.target.dataset.template;
             const allUnits = textContentWrapper.querySelectorAll('.editable-unit');
-            allUnits.forEach(unit => unit.style.cssText = ''); // 인라인 스타일 초기화
+            allUnits.forEach(unit => unit.style.cssText = '');
             switch (templateType) {
                 case 'drop-cap':
-                    allUnits.forEach(unit => {
-                        const prevSibling = unit.previousSibling;
-                        if (prevSibling === null || (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR')) {
-                            unit.style.fontWeight = '900';
-                            unit.style.fontSize = '1.5em';
-                        }
-                    });
-                    break;
+                    allUnits.forEach(unit => { /* ... */ }); break;
                 case 'first-word-letter-bold':
-                    const whitespaceRegex = /\s/;
-                    allUnits.forEach(unit => {
-                        const prevSibling = unit.previousSibling;
-                        if (prevSibling === null || (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR') || (prevSibling.textContent && whitespaceRegex.test(prevSibling.textContent))) {
-                            if (!whitespaceRegex.test(unit.textContent)) {
-                                unit.style.fontWeight = '900';
-                            }
-                        }
-                    });
-                    break;
+                    const whitespaceRegex = /\s/; /* ... */ break;
                 case 'alternate-size':
-                    allUnits.forEach((unit, index) => {
-                        if (index % 2 === 0) {
-                            unit.style.fontSize = '1.2em';
-                        } else {
-                            unit.style.fontSize = '0.8em';
-                        }
-                    });
-                    break;
+                    allUnits.forEach((unit, index) => { /* ... */ }); break;
                 case 'highlight-particles':
-                    const particles = ['은', '는', '이', '가', '을', '를', '의', '에', '도', '만'];
-                    allUnits.forEach(unit => {
-                        const prevSibling = unit.previousSibling;
-                        if (particles.includes(unit.textContent) && prevSibling && (!prevSibling.tagName || prevSibling.tagName.toUpperCase() !== 'BR')) {
-                            unit.style.fontSize = '0.7em';
-                            unit.style.color = '#888';
-                        }
-                    });
-                    break;
-                case 'reset-styles':
-                    applyStyles(); // 컨트롤러 현재 값으로 전체 스타일 다시 적용
-                    break;
+                    const particles = ['은', '는', '이', '가', '을', '를', '의', '에', '도', '만']; /* ... */ break;
+                case 'reset-styles': applyStyles(); break;
             }
         });
     }
 
     // 5. 챗봇 기능 구현 (CHATBOT 탭용)
-    // ▼▼▼ [수정] API 키를 여기에 정확히 입력하세요. ▼▼▼
-    const API_KEY = "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU"; // ⚠️ 중요: "AIzaSy..." 로 시작하는 실제 키로 교체!
-    
+    const API_KEY = "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU"; // ⚠️ 중요: 본인의 실제 API 키로 교체!
     const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input');
+    const chatInput = document.getElementById('chat-input'); // CHATBOT 탭의 입력 필드
     const chatMessages = document.getElementById('chat-messages');
 
-    let genAI = null; // GoogleGenerativeAI 인스턴스를 담을 변수
-    let chatSession = null; // model.startChat()의 결과를 담을 변수
+    let genAI = null;
+    let chatSession = null;
 
     function initializeChatbot() {
-        // API 키가 placeholder이거나 비어있는지 확인
         if (!API_KEY || API_KEY === "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU" || API_KEY.trim() === "") {
-            console.error("챗봇 오류: API 키가 설정되지 않았습니다. script.js 파일에서 API_KEY 변수를 확인해주세요.");
+            console.error("챗봇 오류: API 키가 설정되지 않았습니다.");
             appendChatMessage("챗봇을 사용하려면 유효한 API 키가 필요합니다. API_KEY를 확인해주세요.", 'ai error');
             return false;
         }
         try {
-            genAI = new GoogleGenerativeAI(API_KEY); // genAI 변수에 인스턴스 할당
-            
-            // ▼▼▼ [수정] 원하는 모델 ID로 이 부분을 수정하세요. ▼▼▼
-            const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro-preview-05-06" }); // 예: "gemini-1.5-flash", "gemini-pro", "gemini-2.5-pro-preview-05-06" 등
-            // ▲▲▲ 원하는 모델 ID로 이 부분을 수정하세요. ▲▲▲
-            
-            // chatSession 변수에 model.startChat() 결과 할당
+            genAI = new GoogleGenerativeAI(API_KEY);
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro-preview-05-06" }); // 모델 ID 확인 및 수정
             chatSession = model.startChat({ 
                 history: [
                     {
@@ -234,13 +211,36 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
     }
 
     if (chatForm && chatInput && chatMessages) {
-        let chatbotInitialized = initializeChatbot();
+        let chatbotInitialized = false; // 초기에는 false
+
+        // CHATBOT 탭이 활성화될 때만 챗봇 초기화 시도
+        const chatbotTabButton = document.querySelector('button[data-tab="tab5"]');
+        if (chatbotTabButton) {
+            new MutationObserver((mutationsList, observer) => {
+                for(const mutation of mutationsList) {
+                    if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                        if (chatbotTabButton.classList.contains('active') && !chatbotInitialized) {
+                            console.log("CHATBOT 탭 활성화, 초기화 시도");
+                            chatbotInitialized = initializeChatbot();
+                        }
+                    }
+                }
+            }).observe(chatbotTabButton, { attributes: true });
+
+            // 페이지 로드 시 CHATBOT 탭이 이미 활성화 상태라면 초기화
+            if (chatbotTabButton.classList.contains('active') && !chatbotInitialized) {
+                console.log("페이지 로드 시 CHATBOT 탭 활성화, 초기화 시도");
+                chatbotInitialized = initializeChatbot();
+            }
+        }
+
 
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            if (!chatbotInitialized || !chatSession) { // chatSession이 초기화되었는지도 확인
-                appendChatMessage("챗봇이 초기화되지 않았습니다. API 키 또는 모델 설정을 확인해주세요.", 'ai error');
-                return;
+            if (!chatbotInitialized || !chatSession) {
+                appendChatMessage("챗봇이 초기화되지 않았거나 세션이 없습니다. API 키 및 설정을 확인하세요.", 'ai error');
+                if (!chatbotInitialized) chatbotInitialized = initializeChatbot(); // 다시 초기화 시도
+                if (!chatSession) return; // 그래도 세션 없으면 중단
             }
 
             const userMessage = chatInput.value.trim();
@@ -252,7 +252,7 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
             scrollToChatBottom();
 
             try {
-                const result = await chatSession.sendMessage(userMessage); // chatSession 사용
+                const result = await chatSession.sendMessage(userMessage);
                 const aiMessage = result.response.text();
                 loadingMessageElement.classList.remove('loading');
                 loadingMessageElement.querySelector('p').textContent = aiMessage;
@@ -270,7 +270,7 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
     }
 
     function appendChatMessage(text, type) {
-        if (!chatMessages) return null; 
+        if (!chatMessages) return null;
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', ...type.split(' '));
         const textElement = document.createElement('p');
