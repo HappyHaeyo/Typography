@@ -19,10 +19,10 @@ body {
     background-color: var(--color-background);
     color: var(--color-text-primary);
     line-height: 1.6;
-    padding: 20px;
+    padding: 20px; /* body에 다시 padding 적용 */
 }
 
-.page-wrapper {
+.page-wrapper { /* 기존 스타일 유지 */
     max-width: 1200px;
     margin: 40px auto;
     background-color: var(--color-surface);
@@ -35,309 +35,75 @@ body {
     text-align: center;
     margin-bottom: 30px;
 }
+.page-header h1 { font-size: 2.5em; margin-bottom: 0.5em; }
+.page-header .subtitle { font-size: 1.1em; color: var(--color-text-secondary); margin-bottom: 0; }
 
-.page-header h1 {
-    font-size: 2.5em;
-    margin-bottom: 0.5em;
-    color: var(--color-text-primary);
-}
+/* 탭 네비게이션 스타일 (기존과 동일) */
+.tab-navigation { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid #dee2e6; padding-bottom: 15px; }
+.tab-button { padding: 10px 20px; font-size: 1em; font-weight: 500; border: 1px solid transparent; border-radius: var(--border-radius-main); background-color: transparent; color: var(--color-text-secondary); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
+.tab-button:hover { background-color: var(--color-accent-hover); color: var(--color-accent-text); transform: translateY(-2px); }
+.tab-button.active { background-color: var(--color-accent); color: var(--color-accent-text); font-weight: 700; }
 
-.page-header .subtitle {
-    font-size: 1.1em;
-    color: var(--color-text-secondary);
-    margin-bottom: 0;
-}
+/* 탭 콘텐츠 스타일 (기존과 동일) */
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.tab-content h2 { margin-top: 0; margin-bottom: 1.5em; font-size: 1.8em; }
+.tab-content ul { list-style-type: disc; padding-left: 20px; margin-bottom: 1.5em; }
+.tab-content li { margin-bottom: 0.8em; line-height: 1.7; }
 
-/* 탭 네비게이션 스타일 */
-.tab-navigation {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-    border-bottom: 1px solid #dee2e6;
-    padding-bottom: 15px;
-}
+/* 패턴 쇼케이스 탭 내부 스타일 (기존과 동일) */
+#tab4.tab-content.active { display: flex; gap: 30px; }
+.controls-panel { flex: 1; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius-main); }
+#pattern-display { flex: 2; border: 1px solid #dee2e6; min-height: 300px; padding: 20px; display: flex; justify-content: center; align-items: center; background-color: var(--color-surface); border-radius: var(--border-radius-main); overflow: auto; }
+#text-content-wrapper { display: inline-block; text-align: left; white-space: pre-wrap; }
 
-.tab-button {
-    padding: 10px 20px;
-    font-size: 1em;
-    font-weight: 500;
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-main);
-    background-color: transparent;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
+/* 컨트롤 그룹 스타일 (기존과 동일) */
+.template-section { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #dee2e6; }
+.template-section label { display: block; margin-bottom: 10px; font-weight: 500; }
+.template-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+.template-btn { padding: 8px 12px; font-size: 0.9em; font-family: var(--font-primary); color: var(--color-accent); background-color: transparent; border: 1px solid var(--color-accent); border-radius: var(--border-radius-main); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; }
+.template-btn:hover { background-color: var(--color-accent); color: var(--color-accent-text); }
+.control-group { margin-bottom: 15px; }
+.control-group label { display: block; margin-bottom: 5px; font-weight: 500; }
+.control-group input[type="range"], .control-group select, .control-group textarea { width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; font-family: var(--font-primary); }
+.control-group textarea { min-height: 80px; resize: vertical; }
+.control-group input[type="range"] { padding: 0; }
+.control-group span { margin-left: 10px; font-size: 0.9em; color: var(--color-text-secondary); }
 
-.tab-button:hover {
-    background-color: var(--color-accent-hover);
-    color: var(--color-accent-text);
-    transform: translateY(-2px);
-}
-
-.tab-button.active {
-    background-color: var(--color-accent);
-    color: var(--color-accent-text);
-    font-weight: 700;
-}
-
-/* 탭 콘텐츠 스타일 */
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-.tab-content h2 {
-    margin-top: 0;
-    margin-bottom: 1.5em;
-    font-size: 1.8em;
-}
-
-.tab-content ul {
-    list-style-type: disc;
-    padding-left: 20px;
-    margin-bottom: 1.5em;
-}
-
-.tab-content li {
-    margin-bottom: 0.8em;
-    line-height: 1.7;
-}
-
-
-/* 컨트롤 패널 및 패턴 디스플레이 영역 */
-#tab4.tab-content.active {
-    display: flex;
-    gap: 30px;
-}
-
-.controls-panel {
-    flex: 1;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: var(--border-radius-main);
-}
-
-#pattern-display {
-    flex: 2;
-    border: 1px solid #dee2e6;
-    min-height: 300px;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--color-surface);
-    border-radius: var(--border-radius-main);
-    overflow: auto;
-}
-
-#text-content-wrapper {
-    display: inline-block;
-    text-align: left;
-    white-space: pre-wrap;
-}
-
-/* 컨트롤 그룹 스타일 */
-.control-group {
-    margin-bottom: 15px;
-}
-.control-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-}
-
-.control-group input[type="range"],
-.control-group select,
-.control-group textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-family: var(--font-primary);
-}
-
-.control-group textarea {
-    min-height: 80px;
-    resize: vertical;
-}
-
-.control-group input[type="range"] {
-    padding: 0;
-}
-.control-group span {
-    margin-left: 10px;
-    font-size: 0.9em;
-    color: var(--color-text-secondary);
-}
-/* 개별 조정이 가능한 단어(span)에 대한 기본 스타일 */
-.editable-unit {
-    display: inline-block; /* 개별 요소로 인식되도록 */
-    cursor: pointer; /* 마우스를 올리면 클릭 가능함을 표시 */
-    transition: background-color 0.2s ease; /* 부드러운 효과 */
-    border-radius: 3px; /* 약간 둥글게 (선택 사항) */
-}
-
-/* 나중에 클릭으로 선택될 단어에 적용될 스타일 */
-.editable-unit.selected {
-    background-color: #d0eaff; /* 선택되었을 때의 배경색 (예시) */
-}
-/* 템플릿 섹션 스타일 */
-.template-section {
-    margin-bottom: 25px; /* 아래 컨트롤 그룹과의 간격 */
-    padding-bottom: 15px; /* 아래쪽 여백 및 구분선과의 간격 */
-    border-bottom: 1px solid #dee2e6; /* 구분선 */
-}
-
-.template-section label {
-    display: block;
-    margin-bottom: 10px;
-    font-weight: 500;
-}
-
-.template-buttons {
-    display: flex;
-    flex-wrap: wrap; /* 버튼이 많아지면 다음 줄로 넘어가도록 */
-    gap: 8px; /* 버튼 사이 간격 */
-}
-
-.template-btn {
-    padding: 8px 12px;
-    font-size: 0.9em;
-    font-family: var(--font-primary);
-    color: var(--color-accent);
-    background-color: transparent;
-    border: 1px solid var(--color-accent);
-    border-radius: var(--border-radius-main);
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.template-btn:hover {
-    background-color: var(--color-accent);
-    color: var(--color-accent-text);
-}
-/* --- 전체 레이아웃 수정 --- */
-body {
-    /* body의 직접적인 padding을 제거하고, app-container에 부여 */
-    padding: 0; 
-}
-
-.app-container {
-    display: flex;
-    gap: 20px;
-    padding: 20px;
-    align-items: flex-start; /* 상단 정렬 */
-    max-width: 1800px;
-    margin: 0 auto;
-}
-
-.page-wrapper {
-    flex: 2; /* 2만큼의 너비 비율을 가짐 */
-    /* 기존 page-wrapper의 margin: 40px auto; 를 제거해도 좋음 */
-    margin: 0;
-}
-
-/* --- 챗봇 컨테이너 스타일 --- */
-.chatbot-container {
-    flex: 1; /* 1만큼의 너비 비율을 가짐 */
-    background-color: var(--color-surface);
-    border-radius: var(--border-radius-main);
-    box-shadow: var(--shadow-main);
+/* ▼▼▼ CHATBOT 탭 내부 UI 스타일 (높이 조절 등 필요) ▼▼▼ */
+.chatbot-tab-content { /* CHATBOT 탭 콘텐츠 영역에 대한 스타일 */
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 40px); /* 화면 높이에 맞게 조절 */
-    max-height: 900px; /* 최대 높이 제한 */
+    /* 탭 안에 들어가므로, 높이를 적절히 설정해야 합니다. */
+    /* 예시: 부모(.content-area)의 높이를 기준으로 하거나, 고정 높이 지정 */
+    height: 600px; /* 예시 높이, 필요에 따라 조절 */
+    border: 1px solid #e0e0e0;
+    border-radius: var(--border-radius-main);
+    margin-top: 20px; /* 다른 탭과 구분되도록 위쪽 여백 */
 }
 
-.chatbot-header {
-    padding: 20px;
+.chatbot-header { /* 챗봇 헤더는 그대로 사용 */
+    padding: 15px 20px; /* 패딩 약간 줄임 */
     border-bottom: 1px solid #dee2e6;
     text-align: center;
 }
+.chatbot-header h2 { margin: 0 0 5px 0; font-size: 1.5em; }
+.chatbot-header p { margin: 0; font-size: 0.9em; color: var(--color-text-secondary); }
 
-.chatbot-header h2 {
-    margin: 0 0 5px 0;
-    font-size: 1.5em;
-}
-
-.chatbot-header p {
-    margin: 0;
-    font-size: 0.9em;
-    color: var(--color-text-secondary);
-}
-
-.chat-messages {
-    flex-grow: 1; /* 남는 공간을 모두 차지 */
+.chat-messages { /* 메시지 영역은 그대로 사용, 높이는 chatbot-tab-content에 의해 제한됨 */
+    flex-grow: 1;
     padding: 20px;
-    overflow-y: auto; /* 메시지가 많아지면 스크롤 */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
-
-.chat-message {
-    max-width: 85%;
-    padding: 10px 15px;
-    border-radius: 18px;
-    line-height: 1.5;
-}
-
-.chat-message p {
-    margin: 0;
-}
-
-.chat-message.user {
-    background-color: var(--color-accent);
-    color: var(--color-accent-text);
-    align-self: flex-end; /* 사용자 메시지는 오른쪽 정렬 */
-    border-bottom-right-radius: 4px; /* 말풍선 꼬리 모양 흉내 */
-}
-
-.chat-message.ai {
-    background-color: #e9ecef;
-    color: var(--color-text-primary);
-    align-self: flex-start; /* AI 메시지는 왼쪽 정렬 */
-    border-bottom-left-radius: 4px; /* 말풍선 꼬리 모양 흉내 */
-}
-
-.chat-message.loading {
-    color: #888;
-    font-style: italic;
-}
-
-.chat-input-form {
-    display: flex;
-    padding: 15px;
-    border-top: 1px solid #dee2e6;
-}
-
-#chat-input {
-    flex-grow: 1;
-    border: 1px solid #ced4da;
-    border-radius: 20px;
-    padding: 10px 15px;
-    font-size: 1em;
-    margin-right: 10px;
-    font-family: var(--font-primary);
-}
-
-.chat-input-form button {
-    padding: 10px 20px;
-    border: none;
-    background-color: var(--color-accent);
-    color: var(--color-accent-text);
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.chat-input-form button:hover {
-    background-color: var(--color-accent-hover);
-}
+.chat-message { max-width: 85%; padding: 10px 15px; border-radius: 18px; line-height: 1.5; }
+.chat-message p { margin: 0; }
+.chat-message.user { background-color: var(--color-accent); color: var(--color-accent-text); align-self: flex-end; border-bottom-right-radius: 4px; }
+.chat-message.ai { background-color: #e9ecef; color: var(--color-text-primary); align-self: flex-start; border-bottom-left-radius: 4px; }
+.chat-message.loading { color: #888; font-style: italic; }
+.chat-input-form { display: flex; padding: 15px; border-top: 1px solid #dee2e6; }
+#chat-input { flex-grow: 1; border: 1px solid #ced4da; border-radius: 20px; padding: 10px 15px; font-size: 1em; margin-right: 10px; font-family: var(--font-primary); }
+.chat-input-form button { padding: 10px 20px; border: none; background-color: var(--color-accent); color: var(--color-accent-text); border-radius: 20px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s; }
+.chat-input-form button:hover { background-color: var(--color-accent-hover); }
