@@ -47,12 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    if (textInput) {
+    if (textInput) { // textInput 요소가 페이지에 있을 때만 실행
         textInput.addEventListener('input', renderTextUnits);
     }
-    if (textContentWrapper) {
-        renderTextUnits(); // 초기 렌더링
+    if (textContentWrapper) { // textContentWrapper도 있을 때 초기 렌더링
+         renderTextUnits();
     }
+
 
     // 3. 타이포그래피 컨트롤 기능 (패턴 쇼케이스 탭용)
     const letterSpacingSlider = document.getElementById('letter-spacing');
@@ -66,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function applyStyles() {
         if (!textContentWrapper) return;
+        // 컨트롤러가 페이지에 없을 수도 있으므로, 각 컨트롤러의 존재 여부를 확인합니다.
         const lsValue = letterSpacingSlider ? letterSpacingSlider.value : '0';
         const lhValue = lineHeightSlider ? lineHeightSlider.value : '1.5';
         const fsValue = fontSizeSlider ? fontSizeSlider.value : '32';
@@ -95,14 +97,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (fontSizeSlider && fontSizeValueSpan) fontSizeValueSpan.textContent = fsValue;
         if (fontWeightSlider && fontWeightValueSpan) fontWeightValueSpan.textContent = fwValue;
     }
+
     const controls = [letterSpacingSlider, lineHeightSlider, fontSizeSlider, fontWeightSlider];
     controls.forEach(control => {
-        if (control) {
+        if (control) { // 각 컨트롤 요소가 페이지에 있을 때만 이벤트 리스너를 추가합니다.
             control.addEventListener('input', applyStyles);
         }
     });
-    if (textContentWrapper) {
-        applyStyles(); // 초기 스타일 적용
+
+    if (textContentWrapper) { // textContentWrapper가 있을 때만 초기 스타일 적용
+        applyStyles();
     }
 
     // 4. 템플릿 기능 (패턴 쇼케이스 탭용)
@@ -112,37 +116,81 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!event.target.classList.contains('template-btn') || !textContentWrapper) return;
             const templateType = event.target.dataset.template;
             const allUnits = textContentWrapper.querySelectorAll('.editable-unit');
-            allUnits.forEach(unit => unit.style.cssText = '');
+            allUnits.forEach(unit => unit.style.cssText = ''); // 인라인 스타일 초기화
             switch (templateType) {
-                case 'drop-cap': /* ... */ break;
-                case 'first-word-letter-bold': /* ... */ break;
-                case 'alternate-size': /* ... */ break;
-                case 'highlight-particles': /* ... */ break;
-                case 'reset-styles': applyStyles(); break;
+                case 'drop-cap':
+                    allUnits.forEach(unit => {
+                        const prevSibling = unit.previousSibling;
+                        if (prevSibling === null || (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR')) {
+                            unit.style.fontWeight = '900';
+                            unit.style.fontSize = '1.5em';
+                        }
+                    });
+                    break;
+                case 'first-word-letter-bold':
+                    const whitespaceRegex = /\s/;
+                    allUnits.forEach(unit => {
+                        const prevSibling = unit.previousSibling;
+                        if (prevSibling === null || (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR') || (prevSibling.textContent && whitespaceRegex.test(prevSibling.textContent))) {
+                            if (!whitespaceRegex.test(unit.textContent)) {
+                                unit.style.fontWeight = '900';
+                            }
+                        }
+                    });
+                    break;
+                case 'alternate-size':
+                    allUnits.forEach((unit, index) => {
+                        if (index % 2 === 0) {
+                            unit.style.fontSize = '1.2em';
+                        } else {
+                            unit.style.fontSize = '0.8em';
+                        }
+                    });
+                    break;
+                case 'highlight-particles':
+                    const particles = ['은', '는', '이', '가', '을', '를', '의', '에', '도', '만'];
+                    allUnits.forEach(unit => {
+                        const prevSibling = unit.previousSibling;
+                        if (particles.includes(unit.textContent) && prevSibling && (!prevSibling.tagName || prevSibling.tagName.toUpperCase() !== 'BR')) {
+                            unit.style.fontSize = '0.7em';
+                            unit.style.color = '#888';
+                        }
+                    });
+                    break;
+                case 'reset-styles':
+                    applyStyles(); // 컨트롤러 현재 값으로 전체 스타일 다시 적용
+                    break;
             }
         });
     }
 
     // 5. 챗봇 기능 구현 (CHATBOT 탭용)
-    // ▼▼▼ [수정] 본인의 실제 API 키로 교체하세요 ▼▼▼
-    const API_KEY = "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU"; // ⚠️ 중요: 여기에 실제 API 키를 넣으세요!
+    // ▼▼▼ [수정] API 키를 여기에 정확히 입력하세요. ▼▼▼
+    const API_KEY = "YOUR_ACTUAL_API_KEY_HERE"; // ⚠️ 중요: "AIzaSy..." 로 시작하는 실제 키로 교체!
     
     const chatForm = document.getElementById('chat-form');
-    const chatInput = document.getElementById('chat-input'); // ID가 중복되지 않도록 주의
+    const chatInput = document.getElementById('chat-input');
     const chatMessages = document.getElementById('chat-messages');
 
-    let genAIInstance = null;
-    let chatSession = null;
+    let genAI = null; // GoogleGenerativeAI 인스턴스를 담을 변수
+    let chatSession = null; // model.startChat()의 결과를 담을 변수
 
     function initializeChatbot() {
-        if (!API_KEY || API_KEY === "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU" || API_KEY.trim() === "") {
+        // API 키가 placeholder이거나 비어있는지 확인
+        if (!API_KEY || API_KEY === "YOUR_ACTUAL_API_KEY_HERE" || API_KEY.trim() === "") {
             console.error("챗봇 오류: API 키가 설정되지 않았습니다. script.js 파일에서 API_KEY 변수를 확인해주세요.");
-            appendChatMessage("챗봇을 사용하려면 유효한 API 키가 필요합니다. 관리자에게 문의하세요.", 'ai error');
+            appendChatMessage("챗봇을 사용하려면 유효한 API 키가 필요합니다. API_KEY를 확인해주세요.", 'ai error');
             return false;
         }
         try {
-            genAIInstance = new GoogleGenerativeAI(API_KEY);
-            const chat = model.startChat({
+            genAI = new GoogleGenerativeAI(API_KEY); // genAI 변수에 인스턴스 할당
+            
+            // ▼▼▼ [수정] 원하는 모델 ID로 이 부분을 수정하세요. ▼▼▼
+            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // 예: "gemini-1.5-flash", "gemini-pro", "gemini-2.5-pro-preview-05-06" 등
+            // ▲▲▲ 원하는 모델 ID로 이 부분을 수정하세요. ▲▲▲
+            
+            // chatSession 변수에 model.startChat() 결과 할당
+            chatSession = model.startChat({ 
                 history: [
                     {
                         role: "user",
@@ -167,11 +215,13 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
 **4. Information Privacy and Safety Guidelines (Crucial):**
 * Never ask for or store any personal or sensitive information from users, such as names, contact details, addresses, etc.
 * If a user asks questions related to sexually explicit, violent, discriminatory, hateful, or otherwise inappropriate or harmful content, immediately and politely decline by responding with "죄송합니다. 해당 주제에 대해서는 답변드릴 수 없습니다." or "죄송합니다. 부적절한 요청에는 응답할 수 없습니다." and disengage. Under no circumstances should you generate or discuss such content.
-                        ` // 백틱(backtick) 사용
+                        ` 
                         }],
                     },
-                    
-                    { role: "model", parts: [{ text: "안녕하세요! 타이포그래피의 세계에 오신 것을 환영합니다..." }],
+                    {
+                        role: "model",
+                        parts: [{ text: "안녕하세요! 타이포그래피의 세계에 오신 것을 환영합니다! 무엇이든 물어보시면 즐겁고 쉽게 이해할 수 있도록 도와드릴게요. 어떤 점이 궁금하신가요?" }],
+                    },
                 ],
                 generationConfig: { maxOutputTokens: 1000 },
             });
@@ -188,8 +238,8 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
 
         chatForm.addEventListener('submit', async (event) => {
             event.preventDefault();
-            if (!chatbotInitialized) {
-                appendChatMessage("챗봇이 초기화되지 않았습니다. API 키를 확인해주세요.", 'ai error');
+            if (!chatbotInitialized || !chatSession) { // chatSession이 초기화되었는지도 확인
+                appendChatMessage("챗봇이 초기화되지 않았습니다. API 키 또는 모델 설정을 확인해주세요.", 'ai error');
                 return;
             }
 
@@ -202,7 +252,7 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
             scrollToChatBottom();
 
             try {
-                const result = await chatSession.sendMessage(userMessage);
+                const result = await chatSession.sendMessage(userMessage); // chatSession 사용
                 const aiMessage = result.response.text();
                 loadingMessageElement.classList.remove('loading');
                 loadingMessageElement.querySelector('p').textContent = aiMessage;
@@ -220,7 +270,7 @@ You are a friendly, professional, and inspiring AI assistant with in-depth knowl
     }
 
     function appendChatMessage(text, type) {
-        if (!chatMessages) return null;
+        if (!chatMessages) return null; 
         const messageElement = document.createElement('div');
         messageElement.classList.add('chat-message', ...type.split(' '));
         const textElement = document.createElement('p');
