@@ -3,16 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>타이포그래피 패턴 생성기 & 챗봇</title>
-
-    <script type="module" src="https://sdk.withgoogle.com/genai/js/v1/google-genai.js"></script>
+    <title>타이포그래피 패턴 생성기</title>
 
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page-wrapper"> <header class="page-header">
+    <div class="page-wrapper">
+        <header class="page-header">
             <h1>타이포그래피 패턴 생성기</h1>
             <p class="subtitle">타이포그래피 '요소'를 통해 패턴을 만드는 인터랙티브 웹 쇼케이스</p>
         </header>
@@ -22,9 +21,6 @@
             <button class="tab-button" data-tab="tab2">패턴이란?</button>
             <button class="tab-button" data-tab="tab3">타이포그래피 요소</button>
             <button class="tab-button" data-tab="tab4">패턴 쇼케이스</button>
-            {/* */}
-            <button class="tab-button" data-tab="tab5">CHATBOT</button> {/* data-tab="tab5"로 CHATBOT 탭 지정 */}
-            {/* */}
         </nav>
 
         <main class="content-area">
@@ -43,8 +39,9 @@
             <div id="tab3" class="tab-content">
                 <p>타이포그래피의 주요 요소들에 대한 설명이 여기에 들어갑니다.</p>
             </div>
-            <div id="tab4" class="tab-content"> {/* 패턴 쇼케이스 탭 내용 */}
+            <div id="tab4" class="tab-content">
                 <div class="controls-panel">
+                    
                     <div class="template-section">
                         <label>템플릿 적용:</label>
                         <div class="template-buttons">
@@ -53,8 +50,9 @@
                             <button class="template-btn" data-template="alternate-size">글자 크기 교차</button>
                             <button class="template-btn" data-template="highlight-particles">조사만 작게</button>
                             <button class="template-btn" data-template="reset-styles">스타일 초기화</button>
-                        </div>
+                            </div>
                     </div>
+
                     <div class="control-group">
                         <label for="text-input">텍스트 입력:</label>
                         <textarea id="text-input" placeholder="여기에 여러 줄을 입력하고&#10;엔터로 줄바꿈 할 수 있습니다."></textarea>
@@ -84,26 +82,9 @@
                     <span id="text-content-wrapper"></span>
                 </div>
             </div>
-            {/* */}
-            <div id="tab5" class="tab-content chatbot-tab-content"> {/* CHATBOT 탭의 id="tab5" */}
-                <div class="chatbot-header">
-                    <h2>AI에게 질문하기</h2>
-                    <p>타이포그래피에 대해 무엇이든 물어보세요!</p>
-                </div>
-                <div class="chat-messages" id="chat-messages">
-                    <div class="chat-message ai">
-                        <p>안녕하세요! 타이포그래피에 대해 궁금한 점이 있으신가요?</p>
-                    </div>
-                </div>
-                <form class="chat-input-form" id="chat-form">
-                    <input type="text" id="chat-input" placeholder="메시지를 입력하세요..." autocomplete="off" required>
-                    <button type="submit">전송</button>
-                </form>
-            </div>
-            {/* */}
         </main>
     </div>
 
-    <script type="module" src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
