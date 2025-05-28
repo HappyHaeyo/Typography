@@ -22,8 +22,10 @@
             <button class="tab-button" data-tab="tab2">패턴이란?</button>
             <button class="tab-button" data-tab="tab3">타이포그래피 요소</button>
             <button class="tab-button" data-tab="tab4">패턴 쇼케이스</button>
-            <button class="tab-button" data-tab="tab5">CHATBOT</button>
-            </nav>
+            {/* */}
+            <button class="tab-button" data-tab="tab5">CHATBOT</button> {/* data-tab="tab5"로 CHATBOT 탭 지정 */}
+            {/* */}
+        </nav>
 
         <main class="content-area">
             <div id="tab1" class="tab-content active">
@@ -41,7 +43,7 @@
             <div id="tab3" class="tab-content">
                 <p>타이포그래피의 주요 요소들에 대한 설명이 여기에 들어갑니다.</p>
             </div>
-            <div id="tab4" class="tab-content">
+            <div id="tab4" class="tab-content"> {/* 패턴 쇼케이스 탭 내용 */}
                 <div class="controls-panel">
                     <div class="template-section">
                         <label>템플릿 적용:</label>
@@ -82,7 +84,8 @@
                     <span id="text-content-wrapper"></span>
                 </div>
             </div>
-            <div id="tab5" class="tab-content chatbot-tab-content">
+            {/* */}
+            <div id="tab5" class="tab-content chatbot-tab-content"> {/* CHATBOT 탭의 id="tab5" */}
                 <div class="chatbot-header">
                     <h2>AI에게 질문하기</h2>
                     <p>타이포그래피에 대해 무엇이든 물어보세요!</p>
@@ -97,7 +100,8 @@
                     <button type="submit">전송</button>
                 </form>
             </div>
-            </main>
+            {/* */}
+        </main>
     </div>
 
     <script type="module" src="script.js"></script>
