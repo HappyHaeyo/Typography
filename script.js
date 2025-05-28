@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. 챗봇 기능 구현 (CHATBOT 탭용)
     // ▼▼▼ [수정] API 키를 여기에 정확히 입력하세요. ▼▼▼
-    const API_KEY = "YOUR_ACTUAL_API_KEY_HERE"; // ⚠️ 중요: "AIzaSy..." 로 시작하는 실제 키로 교체!
+    const API_KEY = "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU"; // ⚠️ 중요: "AIzaSy..." 로 시작하는 실제 키로 교체!
     
     const chatForm = document.getElementById('chat-form');
     const chatInput = document.getElementById('chat-input');
@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function initializeChatbot() {
         // API 키가 placeholder이거나 비어있는지 확인
-        if (!API_KEY || API_KEY === "YOUR_ACTUAL_API_KEY_HERE" || API_KEY.trim() === "") {
+        if (!API_KEY || API_KEY === "AIzaSyAPq2fkrOK7EF52mCqQbAn5zfPtbnyZ-KU" || API_KEY.trim() === "") {
             console.error("챗봇 오류: API 키가 설정되지 않았습니다. script.js 파일에서 API_KEY 변수를 확인해주세요.");
             appendChatMessage("챗봇을 사용하려면 유효한 API 키가 필요합니다. API_KEY를 확인해주세요.", 'ai error');
             return false;
@@ -186,7 +186,7 @@ document.addEventListener('DOMContentLoaded', () => {
             genAI = new GoogleGenerativeAI(API_KEY); // genAI 변수에 인스턴스 할당
             
             // ▼▼▼ [수정] 원하는 모델 ID로 이 부분을 수정하세요. ▼▼▼
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // 예: "gemini-1.5-flash", "gemini-pro", "gemini-2.5-pro-preview-05-06" 등
+            const model = genAI.getGenerativeModel({ model: "gemini-2.5-pro-preview-05-06" }); // 예: "gemini-1.5-flash", "gemini-pro", "gemini-2.5-pro-preview-05-06" 등
             // ▲▲▲ 원하는 모델 ID로 이 부분을 수정하세요. ▲▲▲
             
             // chatSession 변수에 model.startChat() 결과 할당
