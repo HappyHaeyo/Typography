@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. 탭 네비게이션 기능 구현 (이전과 동일)
+    // 1. 탭 네비게이션 기능 구현
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabContents = document.querySelectorAll('.tab-content');
     tabButtons.forEach(button => {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. 텍스트 렌더링 기능 (이전과 동일)
+    // 2. 텍스트 렌더링 기능
     const textInput = document.getElementById('text-input');
     const textContentWrapper = document.getElementById('text-content-wrapper');
     function renderTextUnits() {
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTextUnits();
     }
 
-    // 3. 타이포그래피 컨트롤 기능 (이전과 동일)
+    // 3. 타이포그래피 컨트롤 기능
     const letterSpacingSlider = document.getElementById('letter-spacing');
     const letterSpacingValueSpan = document.getElementById('letter-spacing-value');
     const lineHeightSlider = document.getElementById('line-height');
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         applyStyles();
     }
 
-    // 4. 템플릿 기능 구현 (▼▼▼ 이 부분이 수정됨 ▼▼▼)
+    // 4. 템플릿 기능 구현
     const templateButtonsContainer = document.querySelector('.template-buttons');
     if (templateButtonsContainer) {
         templateButtonsContainer.addEventListener('click', (event) => {
@@ -101,16 +101,35 @@ document.addEventListener('DOMContentLoaded', () => {
             allUnits.forEach(unit => unit.style.cssText = '');
 
             switch (templateType) {
-                case 'first-letter-bold':
-                    // [수정] 각 줄의 첫 글자를 찾아서 굵게 만듭니다.
+                // ▼▼▼ [수정] 'first-letter-bold' -> 'drop-cap' 으로 이름 변경 ▼▼▼
+                case 'drop-cap':
                     allUnits.forEach(unit => {
                         const prevSibling = unit.previousSibling;
-                        // 첫 번째 요소이거나, 바로 앞 요소가 <br> 태그일 경우
                         if (prevSibling === null || (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR')) {
                             unit.style.fontWeight = '900';
+                            unit.style.fontSize = '1.5em'; // 드롭캡 효과를 위해 크기도 키워봄 (예시)
                         }
                     });
                     break;
+                
+                // ▼▼▼ [추가] '각 단어 첫 글자' 템플릿 로직 추가 ▼▼▼
+                case 'first-word-letter-bold':
+                    const whitespaceRegex = /\s/;
+                    allUnits.forEach(unit => {
+                        const prevSibling = unit.previousSibling;
+                        // 앞 요소가 없거나(맨 처음), <br>이거나, 공백일 경우
+                        if (prevSibling === null || 
+                            (prevSibling.tagName && prevSibling.tagName.toUpperCase() === 'BR') ||
+                            (prevSibling.textContent && whitespaceRegex.test(prevSibling.textContent))) {
+                            
+                            // 현재 글자가 공백이 아닐 경우에만 스타일 적용
+                            if (!whitespaceRegex.test(unit.textContent)) {
+                                unit.style.fontWeight = '900';
+                            }
+                        }
+                    });
+                    break;
+
                 case 'alternate-size':
                     allUnits.forEach((unit, index) => {
                         if (index % 2 === 0) {
@@ -121,11 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                     break;
                 case 'highlight-particles':
-                    // [수정] 바로 앞 글자가 공백이나 <br>이 아닐 경우에만 조사로 판단합니다.
                     const particles = ['은', '는', '이', '가', '을', '를', '의', '에', '도', '만'];
                     allUnits.forEach(unit => {
                         const prevSibling = unit.previousSibling;
-                        // 조사가 맞는지 확인하고, 앞 글자가 있는지, 그리고 앞 글자가 <br>이 아닌지 확인
                         if (particles.includes(unit.textContent) && prevSibling && (!prevSibling.tagName || prevSibling.tagName.toUpperCase() !== 'BR')) {
                             unit.style.fontSize = '0.7em';
                             unit.style.color = '#888';
