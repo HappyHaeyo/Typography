@@ -1,15 +1,15 @@
 /* CSS 변수 (색상 및 공통 값) */
 :root {
     --font-primary: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
-    --color-background: #f8f9fa;
-    --color-surface: #ffffff;
-    --color-text-primary: #212529;
-    --color-text-secondary: #495057;
-    --color-accent: #2c3e50;
-    --color-accent-hover: #34495e;
-    --color-accent-text: #ffffff;
-    --shadow-main: 0px 5px 10px 2px rgba(0, 0, 0, 0.15);
-    --border-radius-main: 8px;
+    --color-background: #f8f9fa; /* 페이지 배경색 */
+    --color-surface: #ffffff;    /* 카드(컨텐츠 영역) 배경색 */
+    --color-text-primary: #212529; /* 기본 텍스트 색상 */
+    --color-text-secondary: #495057; /* 보조 텍스트 색상 */
+    --color-accent: #2c3e50; /* 네이비 블루 계열 (활성 탭 배경) */
+    --color-accent-hover: #34495e; /* 네이비 블루 호버 */
+    --color-accent-text: #ffffff; /* 활성 탭 텍스트 */
+    --shadow-main: 0px 5px 10px 2px rgba(0, 0, 0, 0.15); /* 그림자 */
+    --border-radius-main: 8px; /* 테두리 둥글기 */
 }
 
 /* 기본 스타일 초기화 및 설정 */
@@ -19,10 +19,10 @@ body {
     background-color: var(--color-background);
     color: var(--color-text-primary);
     line-height: 1.6;
-    padding: 20px; /* body에 padding 다시 적용 */
+    padding: 20px;
 }
 
-.page-wrapper { /* 2단 레이아웃 .app-container 대신 기존 page-wrapper 사용 */
+.page-wrapper {
     max-width: 1200px;
     margin: 40px auto;
     background-color: var(--color-surface);
@@ -35,80 +35,189 @@ body {
     text-align: center;
     margin-bottom: 30px;
 }
-.page-header h1 { font-size: 2.5em; margin-bottom: 0.5em; }
-.page-header .subtitle { font-size: 1.1em; color: var(--color-text-secondary); margin-bottom: 0; }
+
+.page-header h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: var(--color-text-primary);
+}
+
+.page-header .subtitle {
+    font-size: 1.1em;
+    color: var(--color-text-secondary);
+    margin-bottom: 0;
+}
 
 /* 탭 네비게이션 스타일 */
-.tab-navigation { display: flex; gap: 10px; margin-bottom: 30px; border-bottom: 1px solid #dee2e6; padding-bottom: 15px; }
-.tab-button { padding: 10px 20px; font-size: 1em; font-weight: 500; border: 1px solid transparent; border-radius: var(--border-radius-main); background-color: transparent; color: var(--color-text-secondary); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease; }
-.tab-button:hover { background-color: var(--color-accent-hover); color: var(--color-accent-text); transform: translateY(-2px); }
-.tab-button.active { background-color: var(--color-accent); color: var(--color-accent-text); font-weight: 700; }
+.tab-navigation {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 15px;
+}
+
+.tab-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    font-weight: 500;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-main);
+    background-color: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.tab-button:hover {
+    background-color: var(--color-accent-hover);
+    color: var(--color-accent-text);
+    transform: translateY(-2px);
+}
+
+.tab-button.active {
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
+    font-weight: 700;
+}
 
 /* 탭 콘텐츠 스타일 */
-.tab-content { display: none; } /* 모든 탭 콘텐츠는 기본적으로 숨김 */
-.tab-content.active { display: block; } /* active 클래스가 붙은 탭만 보이도록 */
+.tab-content {
+    display: none;
+}
 
-/* 각 탭 내부 제목/목록 스타일 */
-.tab-content h2 { margin-top: 0; margin-bottom: 1.5em; font-size: 1.8em; }
-.tab-content ul { list-style-type: disc; padding-left: 20px; margin-bottom: 1.5em; }
-.tab-content li { margin-bottom: 0.8em; line-height: 1.7; }
+.tab-content.active {
+    display: block;
+}
 
-/* 패턴 쇼케이스 탭(#tab4) 내부 스타일 */
-#tab4.tab-content.active { /* .active가 붙었을 때만 flex 적용 */
-    display: flex; 
+.tab-content h2 {
+    margin-top: 0;
+    margin-bottom: 1.5em;
+    font-size: 1.8em;
+}
+
+.tab-content ul {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 1.5em;
+}
+
+.tab-content li {
+    margin-bottom: 0.8em;
+    line-height: 1.7;
+}
+
+
+/* 컨트롤 패널 및 패턴 디스플레이 영역 */
+#tab4.tab-content.active {
+    display: flex;
     gap: 30px;
 }
-.controls-panel { flex: 1; padding: 20px; background-color: #f8f9fa; border-radius: var(--border-radius-main); }
-#pattern-display { flex: 2; border: 1px solid #dee2e6; min-height: 300px; padding: 20px; display: flex; justify-content: center; align-items: center; background-color: var(--color-surface); border-radius: var(--border-radius-main); overflow: auto; }
-#text-content-wrapper { display: inline-block; text-align: left; white-space: pre-wrap; }
 
-/* 템플릿 및 컨트롤 그룹 스타일 (기존과 동일) */
-.template-section { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 1px solid #dee2e6; }
-.template-section label { display: block; margin-bottom: 10px; font-weight: 500; }
-.template-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
-.template-btn { padding: 8px 12px; font-size: 0.9em; font-family: var(--font-primary); color: var(--color-accent); background-color: transparent; border: 1px solid var(--color-accent); border-radius: var(--border-radius-main); cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; }
-.template-btn:hover { background-color: var(--color-accent); color: var(--color-accent-text); }
-.control-group { margin-bottom: 15px; }
-.control-group label { display: block; margin-bottom: 5px; font-weight: 500; }
-.control-group input[type="range"], .control-group select, .control-group textarea { width: 100%; padding: 8px; border: 1px solid #ced4da; border-radius: 4px; box-sizing: border-box; font-family: var(--font-primary); }
-.control-group textarea { min-height: 80px; resize: vertical; }
-.control-group input[type="range"] { padding: 0; }
-.control-group span { margin-left: 10px; font-size: 0.9em; color: var(--color-text-secondary); }
-
-/* ▼▼▼ CHATBOT 탭(#tab5) 내부 UI 스타일 ▼▼▼ */
-.chatbot-tab-content { /* CHATBOT 탭 콘텐츠 영역에 대한 스타일 */
-    display: flex; /* .active 클래스가 붙었을 때 block 대신 flex로 설정됨 (JS에 의해) */
-    flex-direction: column;
-    height: 600px; /* 예시 높이, 필요에 따라 조절 */
-    border: 1px solid #e0e0e0;
-    border-radius: var(--border-radius-main);
-    margin-top: 10px; /* 다른 탭과의 위쪽 여백 */
-    background-color: var(--color-surface); /* 배경색 추가 */
-}
-
-.chatbot-header {
-    padding: 15px 20px;
-    border-bottom: 1px solid #dee2e6;
-    text-align: center;
-}
-/* .chatbot-header h2, .chatbot-header p는 .tab-content h2 스타일과 겹칠 수 있으므로,
-   필요하다면 더 구체적인 선택자로 스타일 지정 가능 */
-
-.chat-messages {
-    flex-grow: 1;
+.controls-panel {
+    flex: 1;
     padding: 20px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    background-color: #f8f9fa;
+    border-radius: var(--border-radius-main);
 }
-.chat-message { max-width: 85%; padding: 10px 15px; border-radius: 18px; line-height: 1.5; }
-.chat-message p { margin: 0; }
-.chat-message.user { background-color: var(--color-accent); color: var(--color-accent-text); align-self: flex-end; border-bottom-right-radius: 4px; }
-.chat-message.ai { background-color: #e9ecef; color: var(--color-text-primary); align-self: flex-start; border-bottom-left-radius: 4px; }
-.chat-message.loading, .chat-message.error { color: #777; font-style: italic; align-self: flex-start;} /* 로딩/에러 메시지 */
 
-.chat-input-form { display: flex; padding: 15px; border-top: 1px solid #dee2e6; }
-#chat-input { flex-grow: 1; border: 1px solid #ced4da; border-radius: 20px; padding: 10px 15px; font-size: 1em; margin-right: 10px; font-family: var(--font-primary); }
-.chat-input-form button { padding: 10px 20px; border: none; background-color: var(--color-accent); color: var(--color-accent-text); border-radius: 20px; cursor: pointer; font-size: 1em; font-weight: bold; transition: background-color 0.2s; }
-.chat-input-form button:hover { background-color: var(--color-accent-hover); }
+#pattern-display {
+    flex: 2;
+    border: 1px solid #dee2e6;
+    min-height: 300px;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-surface);
+    border-radius: var(--border-radius-main);
+    overflow: auto;
+}
+
+#text-content-wrapper {
+    display: inline-block;
+    text-align: left;
+    white-space: pre-wrap;
+}
+
+/* 컨트롤 그룹 스타일 */
+.control-group {
+    margin-bottom: 15px;
+}
+.control-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.control-group input[type="range"],
+.control-group select,
+.control-group textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-family: var(--font-primary);
+}
+
+.control-group textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.control-group input[type="range"] {
+    padding: 0;
+}
+.control-group span {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: var(--color-text-secondary);
+}
+/* 개별 조정이 가능한 단어(span)에 대한 기본 스타일 */
+.editable-unit {
+    display: inline-block; /* 개별 요소로 인식되도록 */
+    cursor: pointer; /* 마우스를 올리면 클릭 가능함을 표시 */
+    transition: background-color 0.2s ease; /* 부드러운 효과 */
+    border-radius: 3px; /* 약간 둥글게 (선택 사항) */
+}
+
+/* 나중에 클릭으로 선택될 단어에 적용될 스타일 */
+.editable-unit.selected {
+    background-color: #d0eaff; /* 선택되었을 때의 배경색 (예시) */
+}
+/* 템플릿 섹션 스타일 */
+.template-section {
+    margin-bottom: 25px; /* 아래 컨트롤 그룹과의 간격 */
+    padding-bottom: 15px; /* 아래쪽 여백 및 구분선과의 간격 */
+    border-bottom: 1px solid #dee2e6; /* 구분선 */
+}
+
+.template-section label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.template-buttons {
+    display: flex;
+    flex-wrap: wrap; /* 버튼이 많아지면 다음 줄로 넘어가도록 */
+    gap: 8px; /* 버튼 사이 간격 */
+}
+
+.template-btn {
+    padding: 8px 12px;
+    font-size: 0.9em;
+    font-family: var(--font-primary);
+    color: var(--color-accent);
+    background-color: transparent;
+    border: 1px solid var(--color-accent);
+    border-radius: var(--border-radius-main);
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.template-btn:hover {
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
+}
